@@ -218,7 +218,7 @@ export default function Home() {
       <section id="experience" className="min-h-screen flex flex-col justify-center py-16">
         <FadeInSection className="px-6 sm:px-10 lg:px-24">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Experience</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Professional Experience</h1>
             <div className="space-y-8">
               {experiences.map((exp, index) => (
                 <div key={index} className="border-l-2 border-purple-300 dark:border-purple-700 pl-6 relative">
@@ -242,7 +242,7 @@ export default function Home() {
       <section id="projects" className="min-h-screen flex flex-col justify-center py-16">
         <FadeInSection className="px-6 sm:px-10 lg:px-24">
           <div className="max-w-6xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Projects</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Technical Projects</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
               {projects.map((project, index) => (
                 <div
