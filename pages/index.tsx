@@ -1,86 +1,24 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import FadeInSection from '../components/FadeInSection'
-import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaDiscord, FaTelegram } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
-import { HiMail, HiPhone, HiLocationMarker } from 'react-icons/hi'
+import { HiMail, HiLocationMarker } from 'react-icons/hi'
+import { projects } from '../data/projects'
 
 interface ExperienceItem {
   title: string
   company: string
   period: string
-  description: string[]
-}
-
-interface Project {
-  title: string
   description: string
-  tech: string[]
-  github?: string
-  live?: string
 }
 
 const experiences: ExperienceItem[] = [
   {
-    title: 'Blockchain Developer Intern',
-    company: 'Blockchain Solutions Inc.',
-    period: 'Summer 2023',
-    description: [
-      'Developed smart contracts for DeFi protocols using Solidity',
-      'Collaborated on frontend integration with Web3.js and React',
-      'Participated in code reviews and security audits',
-      'Optimized gas costs for smart contract deployments',
-    ],
-  },
-  {
-    title: 'Web3 Developer',
-    company: 'Decentralized Labs',
-    period: '2022 - Present',
-    description: [
-      'Built NFT marketplace dApp with minting and trading features',
-      'Implemented token vesting contracts for multiple clients',
-      'Optimized gas costs for smart contract deployments',
-      'Led team of 3 developers on DeFi protocol development',
-    ],
-  },
-  {
-    title: 'Smart Contract Developer',
-    company: 'Crypto Ventures',
-    period: '2021 - 2022',
-    description: [
-      'Developed and audited smart contracts for various blockchain projects',
-      'Created automated testing frameworks using Hardhat',
-      'Collaborated with security teams on vulnerability assessments',
-    ],
-  },
-]
-
-const projects: Project[] = [
-  {
-    title: 'DeFi Lending Protocol',
-    description: 'A decentralized lending platform built on Ethereum with automated interest rate calculations and collateral management.',
-    tech: ['Solidity', 'Web3.js', 'React', 'Ethereum'],
-    github: 'https://github.com',
-    live: 'https://example.com',
-  },
-  {
-    title: 'NFT Marketplace dApp',
-    description: 'Full-stack NFT marketplace with minting, trading, and auction features using ERC-721 standard.',
-    tech: ['Solidity', 'IPFS', 'Next.js', 'Ethers.js'],
-    github: 'https://github.com',
-    live: 'https://example.com',
-  },
-  {
-    title: 'Smart Contract Audit Tool',
-    description: 'Automated security analysis tool for Solidity smart contracts with vulnerability detection.',
-    tech: ['TypeScript', 'Node.js', 'Solidity'],
-    github: 'https://github.com',
-  },
-  {
-    title: 'Token Vesting Contract',
-    description: 'Secure token vesting smart contract with customizable release schedules and multi-beneficiary support.',
-    tech: ['Solidity', 'Hardhat', 'Ethereum'],
-    github: 'https://github.com',
+    title: 'Blockchain Intern — MultiversX Foundation',
+    company: 'xAlliance Program (MultiversX Foundation)',
+    period: 'Apr \'25 – Jun \'25',
+    description: 'Served as Project Manager and core contributor for xGrowth, a Web3-native platform aggregating Earn, Grant and Job opportunities across the MultiversX ecosystem. Led sprint planning, feature scoping, and frontend delivery. Coordinated cross-functional teams, authored onboarding documentation, and published the "Intern Intel" blog series documenting practical technical and operational learnings.',
   },
 ]
 
@@ -92,11 +30,32 @@ export default function Home() {
   })
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [statusMessage, setStatusMessage] = useState('')
+  const [showAllProjects, setShowAllProjects] = useState(false)
+
+  // Filter out optional projects initially, show first 4
+  const mainProjects = projects.filter(p => !p.optional)
+  const optionalProjects = projects.filter(p => p.optional)
+  const displayedProjects = showAllProjects ? mainProjects : mainProjects.slice(0, 4)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus('loading')
     setStatusMessage('')
+
+    // Client-side validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setStatus('error')
+      setStatusMessage('Please fill in all fields.')
+      return
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(formData.email)) {
+      setStatus('error')
+      setStatusMessage('Please enter a valid email address.')
+      return
+    }
 
     try {
       const response = await fetch('https://formspree.io/f/<PLACEHOLDER_ID>', {
@@ -130,7 +89,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Blockchain Developer Portfolio</title>
+        <title>Abdur Rahman - Blockchain Developer Portfolio</title>
       </Head>
 
       {/* Home Section - Hero + About */}
@@ -171,7 +130,7 @@ export default function Home() {
         <div className="relative z-10 px-6 sm:px-10 lg:px-24">
           <div className="max-w-4xl mx-auto">
             {/* Hero Content */}
-            <div className="text-center mb-12 animate-fade-in">
+            <div className="text-center mb-8 animate-fade-in">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-4">
                 Blockchain Developer
               </h1>
@@ -181,7 +140,7 @@ export default function Home() {
             </div>
 
             {/* About Section Merged */}
-            <FadeInSection className="mt-16 text-left">
+            <FadeInSection className="mt-8 text-left">
               <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-4">
                 <p>
                   I'm a passionate blockchain developer specializing in building decentralized applications (dApps) and
@@ -226,11 +185,7 @@ export default function Home() {
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{exp.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300 font-medium">{exp.company}</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{exp.period}</p>
-                  <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
-                    {exp.description.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{exp.description}</p>
                 </div>
               ))}
             </div>
@@ -244,48 +199,103 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Technical Projects</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-              {projects.map((project, index) => (
+              {displayedProjects.map((project, index) => (
                 <div
                   key={index}
                   className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
                 >
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">{project.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{project.title}</h3>
+                      {project.subtitle && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{project.subtitle}</p>
+                      )}
+                    </div>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">{project.short}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech.map((tech) => (
+                    {project.skills.map((skill) => (
                       <span
-                        key={tech}
-                        className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded text-xs font-medium"
+                        key={skill}
+                        className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full text-xs font-medium"
                       >
-                        {tech}
+                        {skill}
                       </span>
                     ))}
                   </div>
-                  <div className="flex gap-4">
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 underline"
-                      >
-                        GitHub
-                      </a>
-                    )}
-                    {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline"
-                      >
-                        Live Demo
-                      </a>
-                    )}
-                  </div>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 underline inline-flex items-center gap-1"
+                    >
+                      <FaGithub className="w-4 h-4" />
+                      GitHub
+                    </a>
+                  )}
                 </div>
               ))}
             </div>
+
+            {/* Show More Button */}
+            {!showAllProjects && mainProjects.length > 4 && (
+              <div className="text-center mt-8">
+                <button
+                  onClick={() => setShowAllProjects(true)}
+                  className="px-6 py-3 border-2 border-purple-500 dark:border-purple-400 rounded-lg text-gray-900 dark:text-white hover:bg-purple-500 dark:hover:bg-purple-400 hover:text-white dark:hover:text-gray-900 transition-colors"
+                  aria-label="Show more projects"
+                >
+                  Show More
+                </button>
+              </div>
+            )}
+
+            {/* Optional Projects (Summer of Science) */}
+            {optionalProjects.length > 0 && (
+              <div className="mt-12">
+                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6 text-center">Additional Projects</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                  {optionalProjects.map((project, index) => (
+                    <div
+                      key={index}
+                      className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex-1">
+                          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{project.title}</h3>
+                          {project.subtitle && (
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{project.subtitle}</p>
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300 mb-4">{project.short}</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full text-xs font-medium"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 underline inline-flex items-center gap-1"
+                        >
+                          <FaGithub className="w-4 h-4" />
+                          View Report
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </FadeInSection>
       </section>
@@ -313,11 +323,13 @@ export default function Home() {
                     <span>abdurrahman.iitb@gmail.com</span>
                   </a>
                   <a
-                    href="tel:9999999999"
+                    href="https://t.me/Q_Abdur_Rahman"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-3 px-6 py-3 border-2 border-purple-500 dark:border-purple-400 rounded-lg text-gray-900 dark:text-white hover:bg-purple-500 dark:hover:bg-purple-400 hover:text-white dark:hover:text-gray-900 transition-colors"
                   >
-                    <HiPhone className="w-5 h-5" />
-                    <span>+91 9999999999</span>
+                    <FaTelegram className="w-5 h-5" />
+                    <span>@Q_Abdur_Rahman</span>
                   </a>
                   <div className="flex items-center gap-3 px-6 py-3 border-2 border-purple-500 dark:border-purple-400 rounded-lg text-gray-900 dark:text-white">
                     <HiLocationMarker className="w-5 h-5" />
@@ -346,13 +358,14 @@ export default function Home() {
                     <FaLinkedin className="w-6 h-6" />
                   </a>
                   <a
-                    href="https://www.instagram.com/q_abdur.rahman/"
+                    href="https://discord.gg/REPLACE_INVITE"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
-                    aria-label="Instagram"
+                    className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                    aria-label="Discord"
+                    title="q_abdur.rahman"
                   >
-                    <FaInstagram className="w-6 h-6" />
+                    <FaDiscord className="w-6 h-6" />
                   </a>
                   <a
                     href="http://x.com/Q_Abdur_Rahman"
@@ -382,6 +395,7 @@ export default function Home() {
                       required
                       className="w-full bg-transparent border-b-2 border-purple-500 dark:border-purple-400 focus:outline-none focus:border-purple-600 dark:focus:border-purple-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 py-1"
                       placeholder="Enter your name"
+                      aria-label="Your name"
                     />
                   </div>
                   <div>
@@ -397,6 +411,7 @@ export default function Home() {
                       required
                       className="w-full bg-transparent border-b-2 border-purple-500 dark:border-purple-400 focus:outline-none focus:border-purple-600 dark:focus:border-purple-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 py-1"
                       placeholder="Enter your email"
+                      aria-label="Your email"
                     />
                   </div>
                   <div>
@@ -412,6 +427,7 @@ export default function Home() {
                       rows={6}
                       className="w-full bg-transparent border-b-2 border-purple-500 dark:border-purple-400 focus:outline-none focus:border-purple-600 dark:focus:border-purple-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 py-1 resize-none"
                       placeholder="Enter your message"
+                      aria-label="Your message"
                     />
                   </div>
                   <button
@@ -428,6 +444,7 @@ export default function Home() {
                           ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
                           : 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
                       }`}
+                      role="alert"
                     >
                       {statusMessage}
                     </div>

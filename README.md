@@ -8,12 +8,12 @@ A minimal, responsive single-page scrolling portfolio built with Next.js (pages 
 - **Sticky Navigation**: Sticky header with smooth-scroll anchor links and active section highlighting
 - **AR Badge**: Initials badge in top-right corner linking to home section
 - **Home Section**: Hero section with rotating background elements (left and right), merged About section with bio and skills
-- **Experience Section**: Chronological timeline of roles and internships
-- **Projects Section**: Grid layout with blockchain project cards
+- **Experience Section**: Professional experience timeline
+- **Projects Section**: Grid layout with blockchain project cards, "Show More" functionality (displays first 4, then reveals rest)
 - **Contact Section**: Two-column layout with contact cards (left) and Formspree-integrated form (right), using react-icons for social links
 - **Resume Link**: Navbar Resume link opens `/public/resume.pdf` in a new tab
 - **Responsive Design**: Mobile, tablet, and desktop optimized with consistent horizontal padding (`px-6 sm:px-10 lg:px-24`)
-- **Color Scheme**: Off-white/neutral background with soft purple and blue accents
+- **Color Scheme**: Neutral/off-white gradient background with soft purple and blue accents
 - **Accessibility**: Semantic markup, keyboard navigation, reduced-motion support (respects `prefers-reduced-motion`)
 - **SEO**: Basic meta tags and Open Graph support
 
@@ -39,7 +39,7 @@ A minimal, responsive single-page scrolling portfolio built with Next.js (pages 
 npm install
 ```
 
-2. Configure Formspree (see Configuration section below)
+2. Configure placeholders (see Configuration section below)
 
 3. Run the development server:
 ```bash
@@ -55,9 +55,13 @@ npm run build
 npm start
 ```
 
-## Configuration
+## Configuration & Placeholders
 
-### Contact Form (Formspree)
+### ⚠️ Important: Replace Placeholders
+
+This project includes several placeholders that need to be replaced with actual values:
+
+#### 1. Contact Form (Formspree)
 
 The contact form uses Formspree for email delivery. To set it up:
 
@@ -75,7 +79,33 @@ const response = await fetch('https://formspree.io/f/xvgkqyzw', {
 })
 ```
 
-The form will now send emails to the address you configured in Formspree.
+#### 2. Resume PDF
+
+Replace `public/resume.pdf` with your actual resume PDF file. The Resume link in the navbar will open it in a new tab with the browser's PDF viewer.
+
+#### 3. Discord Invite Link
+
+1. Open `pages/index.tsx`
+2. Find the Discord link in the Contact section
+3. Replace `https://discord.gg/REPLACE_INVITE` with your actual Discord invite link or profile link
+4. The Discord username `q_abdur.rahman` is displayed as a tooltip
+
+#### 4. GitHub Repository Links
+
+All project GitHub links are placeholders. To update them:
+
+1. Open `data/projects.js`
+2. Find each project's `github` field
+3. Replace `https://github.com/placeholder/[project-name]` with your actual repository URLs
+
+Example:
+```javascript
+{
+  title: 'EquiBlock — ETHOnline 2025',
+  // ...
+  github: 'https://github.com/yourusername/equiblock', // Replace this
+}
+```
 
 ## Project Structure
 
@@ -85,6 +115,8 @@ portfolio/
 │   ├── FadeInSection.tsx
 │   ├── Header.tsx
 │   └── Layout.tsx
+├── data/               # Data files (edit these to update content)
+│   └── projects.js     # Project data - EDIT THIS FILE to update projects
 ├── pages/              # Next.js pages
 │   ├── _app.tsx
 │   ├── _document.tsx
@@ -100,37 +132,61 @@ portfolio/
 
 ## Customization
 
-### Replace Resume PDF
+### Editing Project Content
 
-Replace `public/resume.pdf` with your actual resume PDF file. The Resume link in the navbar will open it in a new tab.
+**To update projects, edit `/data/projects.js`** - This is the central file for all project information.
+
+The file exports a `projects` array with the following structure:
+```javascript
+{
+  title: 'Project Name',
+  subtitle: 'Optional subtitle',
+  short: 'Short description',
+  details: 'Detailed description',
+  skills: ['Skill1', 'Skill2', ...],
+  github: 'https://github.com/...',
+  optional: false, // Set to true for optional projects (like Summer of Science)
+}
+```
+
+### Editing Experience
+
+Edit `pages/index.tsx` in the Experience section to update work history. The `experiences` array contains:
+```javascript
+{
+  title: 'Job Title',
+  company: 'Company Name',
+  period: 'Date Range',
+  description: 'Full description text',
+}
+```
 
 ### Update Contact Information
 
 Edit `pages/index.tsx` in the Contact section to update:
 - Email: `abdurrahman.iitb@gmail.com`
-- Phone: `+91 9999999999`
+- Telegram: `@Q_Abdur_Rahman` (link: `https://t.me/Q_Abdur_Rahman`)
 - Location: `Mumbai, India`
-- Social media links (GitHub, LinkedIn, Instagram, X)
+- Social media links (GitHub, LinkedIn, Discord, X)
 
-### Update Content
+### Update Home/About Section
 
-Edit `pages/index.tsx` to update:
-- **Home Section**: Hero content and About section with bio and skills
-- **Experience Section**: Work history timeline
-- **Projects Section**: Project cards with descriptions, tech tags, and links
-- **Contact Section**: Contact cards and form
+Edit `pages/index.tsx` in the Home section to update:
+- Hero title and subtitle
+- About bio text
+- Skills list
 
 ### Styling
 
 All styling is done with Tailwind CSS. Customize colors, spacing, and animations in `tailwind.config.js`. The site uses:
-- Off-white/neutral background (`bg-neutral-50`)
+- Neutral/off-white gradient background (`bg-gradient-to-b from-[#f7f8fb] to-white`)
 - Purple and blue accent colors
 - Consistent horizontal padding: `px-6 sm:px-10 lg:px-24`
 
 ## Animations
 
 The portfolio includes subtle animations that respect `prefers-reduced-motion`:
-1. **Rotating ring SVG elements** in the hero section (left and right, low opacity, slow rotation)
+1. **Rotating ring SVG elements** in the hero section (left and right, low opacity, slow 20s rotation)
 2. **Fade-in animation** for sections on scroll
 
 Both animations automatically disable when users have `prefers-reduced-motion` enabled.
@@ -138,6 +194,7 @@ Both animations automatically disable when users have `prefers-reduced-motion` e
 ## Navigation
 
 The sticky header includes:
+- **Abdur Rahman** (brand name, links to home)
 - **Home**: Smooth scrolls to `#home` section
 - **Experience**: Smooth scrolls to `#experience` section
 - **Projects**: Smooth scrolls to `#projects` section
@@ -145,7 +202,7 @@ The sticky header includes:
 - **Contact**: Smooth scrolls to `#contact` section
 - **AR Badge**: Initials badge in top-right that links to `#home`
 
-Active section highlighting is automatically updated based on scroll position.
+Active section highlighting is automatically updated based on scroll position using IntersectionObserver.
 
 ## Sections
 
@@ -155,18 +212,37 @@ Active section highlighting is automatically updated based on scroll position.
 - Merged About section with bio and skills
 
 ### Experience (`#experience`)
-- Chronological timeline of work experience
-- Each entry includes title, company, period, and bullet points
+- Professional experience timeline
+- Each entry includes title, company, period, and description
 
 ### Projects (`#projects`)
 - Grid layout of project cards
-- Each card shows title, description, tech tags, and links
+- **"Show More" functionality**: Displays first 4 projects, then a button to reveal the rest
+- Each card shows title, subtitle, short description, skill badges, and GitHub link
+- Optional projects (like Summer of Science) are displayed in a separate "Additional Projects" section
+- All project data is managed in `data/projects.js`
 
 ### Contact (`#contact`)
-- Two-column layout: contact cards on left (max-width constrained), form on right
-- Contact cards include email, phone, location, and social icons (using react-icons)
-- Formspree-integrated contact form with inline success/error messages
-- Tighter form spacing (reduced gap between placeholder and input line)
+- Two-column layout: contact cards on left (max-width constrained to `max-w-md`), form on right
+- Contact cards include:
+  - Email (mailto link)
+  - Telegram (`@Q_Abdur_Rahman` with link to `https://t.me/Q_Abdur_Rahman`)
+  - Location (Mumbai, India)
+  - Social icons: GitHub, LinkedIn, Discord, X (Twitter)
+- Formspree-integrated contact form with:
+  - Client-side validation (required fields, email format)
+  - Inline success/error messages
+  - Tighter form spacing (reduced gap between placeholder and input line)
+  - Accessible labels and ARIA attributes
+
+## Placeholder Summary
+
+Before deploying, make sure to replace:
+
+1. ✅ **Formspree ID**: `pages/index.tsx` → `'https://formspree.io/f/<PLACEHOLDER_ID>'`
+2. ✅ **Resume PDF**: Replace `public/resume.pdf` with your actual resume
+3. ✅ **Discord Invite**: `pages/index.tsx` → `'https://discord.gg/REPLACE_INVITE'`
+4. ✅ **GitHub Repo Links**: `data/projects.js` → All `github` fields with placeholder URLs
 
 ## License
 

@@ -56,14 +56,14 @@ export default function Header() {
     >
       <nav className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-24">
         <div className="flex items-center justify-between h-16">
-          {/* Left side - Logo/Portfolio text */}
+          {/* Left side - Logo/Name */}
           <div className="flex items-center">
             <a
               href="#home"
               onClick={(e) => handleSmoothScroll(e, 'home')}
               className="text-xl font-semibold text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
             >
-              Portfolio
+              Abdur Rahman
             </a>
           </div>
 
