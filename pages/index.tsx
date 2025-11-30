@@ -58,7 +58,7 @@ export default function Home() {
     }
 
     try {
-      const response = await fetch('https://formspree.io/f/<PLACEHOLDER_ID>', {
+      const response = await fetch('https://formspree.io/f/xwpgpnzr', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -143,14 +143,14 @@ export default function Home() {
             <FadeInSection className="mt-8 text-left">
               <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-4">
                 <p>
-                  I'm a passionate blockchain developer specializing in building decentralized applications (dApps) and
-                  smart contracts. With expertise in Solidity, Web3.js, and Ethereum development, I create secure and
-                  efficient blockchain solutions.
+                I'm Abdur Rahman, a blockchain developer from IIT Bombay with a strong focus 
+                on smart contract security, DeFi mechanics, and resilient protocol design. 
+                I spend my time breaking down vulnerabilities, tracing transaction flows, and understanding 
+                how decentralized systems behave in adversarial conditions.
                 </p>
                 <p>
-                  My focus areas include smart contract development, DeFi protocols, NFT marketplaces, and blockchain
-                  infrastructure. I'm committed to leveraging blockchain technology to build transparent, trustless, and
-                  decentralized systems.
+                Alongside my technical work, I’m deeply interested in entrepreneurship and enjoy 
+                building products from scratch turning ideas into functional, user-centric solutions.
                 </p>
                 <div className="mt-8">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Skills</h3>
@@ -323,13 +323,16 @@ export default function Home() {
                     <span>abdurrahman.iitb@gmail.com</span>
                   </a>
                   <a
+                    // href="tel:9999999999"
                     href="https://t.me/Q_Abdur_Rahman"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 px-6 py-3 border-2 border-purple-500 dark:border-purple-400 rounded-lg text-gray-900 dark:text-white hover:bg-purple-500 dark:hover:bg-purple-400 hover:text-white dark:hover:text-gray-900 transition-colors"
                   >
+                    {/* <HiPhone className="w-5 h-5" />
+                    <span>+91 9999999999</span> */}
                     <FaTelegram className="w-5 h-5" />
-                    <span>@Q_Abdur_Rahman</span>
+                    <span>Quraishi Abdur Rahman</span>
                   </a>
                   <div className="flex items-center gap-3 px-6 py-3 border-2 border-purple-500 dark:border-purple-400 rounded-lg text-gray-900 dark:text-white">
                     <HiLocationMarker className="w-5 h-5" />
@@ -358,7 +361,7 @@ export default function Home() {
                     <FaLinkedin className="w-6 h-6" />
                   </a>
                   <a
-                    href="https://discord.gg/REPLACE_INVITE"
+                    href="https://discord.gg/q_abdur.rahman"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"

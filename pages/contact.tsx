@@ -17,7 +17,7 @@ export default function Contact() {
     setStatusMessage('')
 
     try {
-      const response = await fetch('https://formspree.io/f/<PLACEHOLDER_ID>', {
+      const response = await fetch('https://formspree.io/f/xwpgpnzr', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
