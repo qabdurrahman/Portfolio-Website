@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-gradient-to-b from-[#f7f8fb] to-white dark:bg-gray-900;
+    @apply bg-gradient-to-b from-[#e9edff] via-[#f6f7ff] to-white dark:bg-gray-900 text-gray-900;
   }
 
   @media (prefers-reduced-motion: reduce) {

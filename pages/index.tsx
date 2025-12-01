@@ -10,7 +10,7 @@ interface ExperienceItem {
   title: string
   company: string
   period: string
-  description: string
+  description: string[]
 }
 
 const experiences: ExperienceItem[] = [
@@ -18,13 +18,25 @@ const experiences: ExperienceItem[] = [
     title: 'Blockchain Intern — MultiversX Foundation',
     company: 'xAlliance (MultiversX Foundation)',
     period: 'Apr \'25 – Jun \'25',
-    description: 'Served as Project Manager and core contributor for xGrowth, a Web3-native platform aggregating Earn, Grant and Job opportunities across the MultiversX ecosystem. Led sprint planning, feature scoping, and frontend delivery. Coordinated cross-functional teams, authored onboarding documentation, and published the "Intern Intel" blog series documenting practical technical and operational learnings.',
+    description: [
+      'Served as Project Manager and core contributor for xGrowth, the MultiversX platform aggregating Earn, Grant, and Job opportunities across the ecosystem.',
+      'Contributed to product planning, sprint organization, and ecosystem research for internal MultiversX Web3 initiatives.',
+      'Collaborated closely with design, development, and content teams to ensure smooth feature delivery across sprints.',
+      'Prepared onboarding documentation, contributor workflows, and ecosystem research summaries to accelerate new contributor ramp-up.',
+      'Authored the Intern Intel blog series covering hands-on learnings, workflows, and technical insights from the MultiversX ecosystem.',
+    ],
   },
   {
     title: 'xGrowth — MultiversX Foundation',
-    company: 'Blockchain Internship Project',
+    company: 'Product Lead | Blockchain Internship Project',
     period: 'Jun \'25 – Ongoing',
-    description: 'Served as Project Manager and core contributor for xGrowth, a Web3-native platform aggregating Earn, Grant and Job opportunities across the MultiversX ecosystem. Led sprint planning, feature scoping, and frontend delivery. Coordinated cross-functional teams, authored onboarding documentation, and published the "Intern Intel" blog series documenting practical technical and operational learnings.',
+    description: [
+      'Leading planning, design, and development of xGrowth, the MultiversX platform aggregating Earn, Grant, and Job opportunities.',
+      'Developed the Next.js + TypeScript frontend with modular, scalable UI components optimized for rapid iteration.',
+      'Integrated APIs like PeerMe Bounties for live data, managing authentication, and structuring contributor-facing data flows.',
+      'Handling feature scoping, roadmap planning, and weekly collaboration with design, development, and content contributors.',
+      'Improving UI architecture, user flows, and contributor experience through iterative sprint feedback and testing.',
+    ],
   },
 ]
 
@@ -191,7 +203,11 @@ export default function Home() {
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{exp.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300 font-medium">{exp.company}</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{exp.period}</p>
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{exp.description}</p>
+                  <ul className="mt-4 space-y-2 pl-6 text-gray-700 dark:text-gray-300 list-disc marker:text-purple-500 marker:text-lg">
+                    {exp.description.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
                 </div>
               ))}
             </div>
