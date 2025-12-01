@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Head from 'next/head'
 import FadeInSection from '../components/FadeInSection'
-import { FaGithub, FaLinkedin, FaDiscord, FaTelegram } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaDiscord, FaTelegram, FaExternalLinkAlt, FaFileAlt } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import { HiMail, HiLocationMarker } from 'react-icons/hi'
 import { projects } from '../data/projects'
@@ -11,6 +11,12 @@ interface ExperienceItem {
   company: string
   period: string
   description: string[]
+}
+
+interface ProjectLinkable {
+  github?: string
+  live?: string
+  report?: string
 }
 
 const experiences: ExperienceItem[] = [
@@ -49,11 +55,69 @@ export default function Home() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [statusMessage, setStatusMessage] = useState('')
   const [showAllProjects, setShowAllProjects] = useState(false)
+  const messageRef = useRef<HTMLTextAreaElement | null>(null)
 
   // Filter out optional projects initially, show first 4
   const mainProjects = projects.filter(p => !p.optional)
   const optionalProjects = projects.filter(p => p.optional)
   const displayedProjects = showAllProjects ? mainProjects : mainProjects.slice(0, 4)
+
+  const adjustMessageHeight = (element: HTMLTextAreaElement) => {
+    element.style.height = 'auto'
+    const minHeight = 96
+    const maxHeight = 400
+    const newHeight = Math.min(Math.max(element.scrollHeight, minHeight), maxHeight)
+    element.style.height = `${newHeight}px`
+  }
+
+  const resetMessageHeight = () => {
+    if (messageRef.current) {
+      messageRef.current.style.height = 'auto'
+      messageRef.current.style.height = '96px'
+    }
+  }
+
+  const renderProjectLinks = (project: ProjectLinkable) => {
+    if (!project.github && !project.live && !project.report) return null
+
+    return (
+      <div className="flex flex-wrap gap-3">
+        {project.github && (
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 underline inline-flex items-center gap-1"
+          >
+            <FaGithub className="w-4 h-4" />
+            GitHub
+          </a>
+        )}
+        {project.live && (
+          <a
+            href={project.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 underline inline-flex items-center gap-1"
+          >
+            <FaExternalLinkAlt className="w-4 h-4" />
+            Live Demo
+          </a>
+        )}
+        {project.report && (
+          <a
+            href={project.report}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 underline inline-flex items-center gap-1"
+          >
+            <FaFileAlt className="w-4 h-4" />
+            View Report
+          </a>
+        )}
+      </div>
+    )
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -88,6 +152,7 @@ export default function Home() {
         setStatus('success')
         setStatusMessage('Thank you! Your message has been sent successfully.')
         setFormData({ name: '', email: '', message: '' })
+        resetMessageHeight()
       } else {
         throw new Error('Failed to send message')
       }
@@ -98,16 +163,21 @@ export default function Home() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     })
+
+    if (name === 'message' && e.target instanceof HTMLTextAreaElement) {
+      adjustMessageHeight(e.target)
+    }
   }
 
   return (
     <>
       <Head>
-        <title>Abdur Rahman - Blockchain Developer Portfolio</title>
+        <title>Abdur Rahman - Portfolio</title>
       </Head>
 
       {/* Home Section - Hero + About */}
@@ -153,7 +223,7 @@ export default function Home() {
                 Blockchain Developer
               </h1>
               <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-                Building decentralized applications and smart contracts
+              Smart contracts, dApps, and Web3 protocols
               </p>
             </div>
 
@@ -173,7 +243,8 @@ export default function Home() {
                 <div className="mt-8">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Skills</h3>
                   <div className="flex flex-wrap gap-2">
-                    {['Solidity', 'Web3.js', 'Ethereum', 'React', 'TypeScript', 'Node.js', 'Hardhat', 'Truffle', 'IPFS'].map(
+                    {['Solidity', 'Ethereum', 'Security', 'DeFi', 'Smart Contracts', 'Rust', 'Web3.js', 'Hardhat', 
+                    'Python', 'JavaScript', 'Next.js', 'Tailwind CSS', 'TypeScript', 'React','Node.js',   'API Integration', 'Product Management'].map(
                       (skill) => (
                         <span
                           key={skill}
@@ -245,17 +316,7 @@ export default function Home() {
                       </span>
                     ))}
                   </div>
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 underline inline-flex items-center gap-1"
-                    >
-                      <FaGithub className="w-4 h-4" />
-                      GitHub
-                    </a>
-                  )}
+                  {renderProjectLinks(project)}
                 </div>
               ))}
             </div>
@@ -302,17 +363,7 @@ export default function Home() {
                           </span>
                         ))}
                       </div>
-                      {project.github && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 underline inline-flex items-center gap-1"
-                        >
-                          <FaGithub className="w-4 h-4" />
-                          View Report
-                        </a>
-                      )}
+                      {renderProjectLinks(project)}
                     </div>
                   ))}
                 </div>
@@ -446,10 +497,12 @@ export default function Home() {
                     <textarea
                       id="message"
                       name="message"
+                      ref={messageRef}
                       value={formData.message}
                       onChange={handleChange}
                       required
-                      rows={6}
+                      rows={3}
+                      style={{ minHeight: '96px' }}
                       className="w-full bg-transparent border-b-2 border-purple-500 dark:border-purple-400 focus:outline-none focus:border-purple-600 dark:focus:border-purple-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 py-1 resize-none"
                       placeholder="Enter your message"
                       aria-label="Your message"

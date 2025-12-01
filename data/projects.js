@@ -2,12 +2,13 @@
 
 export const projects = [
   {
-    title: 'EquiBlock — ETHOnline 2025',
+    title: 'EquiBlock — ETHOnline 2025 Hackathon',
     subtitle: 'Hackathon Project',
     short: 'Synthetic equity protocol enabling minting and trading of EquiAssets backed by PYUSD collateral.',
     details: 'Built a collateral-backed synthetic equity system using Pyth price feeds and on-chain safety checks. Implemented 5x collateral policy, automated liquidation guard ("Vincent"), and wallet-first trading UX.',
     skills: ['Solidity', 'Next.js', 'Ethers.js', 'Smart-contract security'],
     github: 'https://github.com/qabdurrahman/EquiBlock',
+    live: 'https://equiblock.vercel.app',
   },
   // {
   //   title: 'xGrowth — Blockchain Internship Project',
@@ -20,7 +21,7 @@ export const projects = [
   {
     title: 'Yield Bank Protocol — DeFi Vault',
     subtitle: 'May \'25 – Jun \'25',
-    short: 'Solidity vault prototype for ERC-20 deposits and vault accounting.',
+    short: 'Solidity vault prototype enabling ERC-20 deposits, withdrawals, and vault-based accounting logic.',
     details: 'Designed modular vault with deposit/withdrawal, internal accounting and pause-control. Tested locally using Hardhat.',
     skills: ['Solidity', 'Hardhat', 'ERC-20', 'DeFi design'],
     github: 'https://github.com/qabdurrahman/Yieldbank-Protocol',
@@ -28,7 +29,8 @@ export const projects = [
   {
     title: 'NFT Access Protocol',
     subtitle: 'July \'25',
-    short: 'Membership NFT + AccessGate for token-gated features.',
+    // short: 'Membership NFT + AccessGate for token-gated features.',
+    short: 'Membership NFT system with AccessGate support to enable token-gated permissions and restricted feature access.',
     details: 'ERC-721 based MembershipNFT and AccessGate contracts with metadata & ownership gating patterns. Tested using Hardhat.',
     skills: ['Solidity', 'ERC-721', 'Access Control'],
     github: 'https://github.com/qabdurrahman/nft-access-protocol',
@@ -36,7 +38,8 @@ export const projects = [
   {
     title: 'Cross-Chain Bridge Mockup',
     subtitle: 'July \'25',
-    short: 'Bridge mockup with lock/mint patterns and event-driven relayer flow.',
+    // short: 'Bridge mockup with lock/mint patterns and event-driven relayer flow.',
+    short: 'Bridge prototype demonstrating lock/mint mechanisms and an event-driven relayer flow for cross-chain asset movement.',
     details: 'Lock/emit pattern for ERC-20; simulated mint/burn and relayer events for cross-chain syncing.',
     skills: ['Solidity', 'Ethers.js', 'Cross-chain patterns'],
     github: 'https://github.com/qabdurrahman/cross-chain-bridge',
@@ -44,7 +47,7 @@ export const projects = [
   {
     title: 'Smart Contract Lottery',
     subtitle: 'Feb \'25',
-    short: 'On-chain lottery using Chainlink VRF for secure randomness.',
+    short: 'On-chain lottery system leveraging Chainlink VRF to provide secure, verifiable randomness for winner selection.',
     details: 'Solidity contract with fee enforcement and Chainlink VRF integration. Tested with Remix and unit checks.',
     skills: ['Solidity', 'Chainlink VRF', 'Remix'],
     github: 'https://github.com/qabdurrahman/SmartContractLottery',
@@ -52,27 +55,18 @@ export const projects = [
   {
     title: 'Mobile App for NSS IITB',
     subtitle: 'Dec \'24',
-    short: 'Location-based attendance & role-based access for NSS IIT Bombay.',
+    short: 'Role-based access control system built for NSS IIT Bombay to streamline permissions and operational workflows.',
     details: 'Implemented geofencing check-in verification, role-based access control and streamlined volunteer UI.',
-    skills: ['React Native', 'Geofencing', 'Auth'],
+    skills: ['React Native', 'Auth'],
     github: 'https://github.com/nssiitb/nssApp',
   },
   {
     title: 'Blockchains — Summer of Science 2024',
     subtitle: 'May \'24 – July \'24',
-    short: 'Research on consensus, BFT/PBFT, slasher rules, and blockchain fundamentals. (Link to report available.)',
+    short: 'Research project exploring BFT/PBFT consensus mechanisms, validator slashing rules, and core blockchain security fundamentals.',
     details: 'Research project exploring consensus, BFT/PBFT variants, slasher rules and blockchain security patterns.',
     skills: ['Research', 'Blockchain Fundamentals', 'Consensus Algorithms'],
-    github: 'https://github.com/placeholder/blockchains-sos',
-    optional: true, // This is the optional entry
-  },
-  {
-    title: 'Blockchains — Summer of Science 2024',
-    subtitle: 'May \'24 – July \'24',
-    short: 'Research on consensus, BFT/PBFT, slasher rules, and blockchain fundamentals. (Link to report available.)',
-    details: 'Research project exploring consensus, BFT/PBFT variants, slasher rules and blockchain security patterns.',
-    skills: ['Research', 'Blockchain Fundamentals', 'Consensus Algorithms'],
-    github: 'https://github.com/placeholder/blockchains-sos',
+    report: '/reports/blockchains-sos.pdf',
     optional: true, // This is the optional entry
   },
 ]

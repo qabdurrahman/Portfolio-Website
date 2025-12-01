@@ -144,7 +144,9 @@ The file exports a `projects` array with the following structure:
   short: 'Short description',
   details: 'Detailed description',
   skills: ['Skill1', 'Skill2', ...],
-  github: 'https://github.com/...',
+  github: 'https://github.com/...',        // Optional
+  demo: 'https://demo.example.com',        // Optional live demo link
+  report: '/reports/project-report.pdf',   // Optional PDF/report link
   optional: false, // Set to true for optional projects (like Summer of Science)
 }
 ```
@@ -179,7 +181,7 @@ Edit `pages/index.tsx` in the Home section to update:
 ### Styling
 
 All styling is done with Tailwind CSS. Customize colors, spacing, and animations in `tailwind.config.js`. The site uses:
-- Neutral/off-white gradient background (`bg-gradient-to-b from-[#f7f8fb] to-white`)
+- Neutral/off-white gradient background (`bg-gradient-to-b from-[#e9edff] via-[#f6f7ff] to-white`)
 - Purple and blue accent colors
 - Consistent horizontal padding: `px-6 sm:px-10 lg:px-24`
 
@@ -237,12 +239,14 @@ Active section highlighting is automatically updated based on scroll position us
 
 ## Placeholder Summary
 
-Before deploying, make sure to replace:
+Before deploying, make sure to replace/update:
 
 1. ✅ **Formspree ID**: `pages/index.tsx` → `'https://formspree.io/f/<PLACEHOLDER_ID>'`
 2. ✅ **Resume PDF**: Replace `public/resume.pdf` with your actual resume
-3. ✅ **Discord Invite**: `pages/index.tsx` → `'https://discord.gg/REPLACE_INVITE'`
-4. ✅ **GitHub Repo Links**: `data/projects.js` → All `github` fields with placeholder URLs
+3. ✅ **Blockchains Report PDF**: Replace `public/reports/blockchains-sos.pdf` with the actual Summer of Science report
+4. ✅ **Discord Invite (if different)**: `pages/index.tsx` → Update the Discord link to your preferred invite/profile URL
+5. ✅ **GitHub Repo Links**: `data/projects.js` → Point each `github` field to the correct repository
+6. ✅ **Live Demo Links**: `data/projects.js` → Update `demo` fields to the correct deployment URLs (or remove the field if no live demo)
 
 ## License
 
