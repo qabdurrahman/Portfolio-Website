@@ -55,7 +55,7 @@ export const projects = [
     short: 'Location-based attendance & role-based access for NSS IIT Bombay.',
     details: 'Implemented geofencing check-in verification, role-based access control and streamlined volunteer UI.',
     skills: ['React Native', 'Geofencing', 'Auth'],
-    github: 'https://github.com/placeholder/nss-app',
+    github: 'https://github.com/nssiitb/nssApp',
   },
   {
     title: 'Blockchains — Summer of Science 2024',

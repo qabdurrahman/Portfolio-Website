@@ -16,8 +16,14 @@ interface ExperienceItem {
 const experiences: ExperienceItem[] = [
   {
     title: 'Blockchain Intern — MultiversX Foundation',
-    company: 'xAlliance Program (MultiversX Foundation)',
+    company: 'xAlliance (MultiversX Foundation)',
     period: 'Apr \'25 – Jun \'25',
+    description: 'Served as Project Manager and core contributor for xGrowth, a Web3-native platform aggregating Earn, Grant and Job opportunities across the MultiversX ecosystem. Led sprint planning, feature scoping, and frontend delivery. Coordinated cross-functional teams, authored onboarding documentation, and published the "Intern Intel" blog series documenting practical technical and operational learnings.',
+  },
+  {
+    title: 'xGrowth — MultiversX Foundation',
+    company: 'Blockchain Internship Project',
+    period: 'Jun \'25 – Ongoing',
     description: 'Served as Project Manager and core contributor for xGrowth, a Web3-native platform aggregating Earn, Grant and Job opportunities across the MultiversX ecosystem. Led sprint planning, feature scoping, and frontend delivery. Coordinated cross-functional teams, authored onboarding documentation, and published the "Intern Intel" blog series documenting practical technical and operational learnings.',
   },
 ]
